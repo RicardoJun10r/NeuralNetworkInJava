@@ -22,7 +22,7 @@ public class Main {
 
         Double[] xor_output = { 0., 1., 1., 0. };
 
-        RedeNeural redeNeural = new RedeNeural(xor_input, xor_output, 2, LR, true);
+        NeuralNetwork redeNeural = new NeuralNetwork(xor_input, xor_output, 2, LR, true);
         System.out.println("AND Gate Training:");
         redeNeural.train(EPOCHS);
 

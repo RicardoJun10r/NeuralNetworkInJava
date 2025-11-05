@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Neuronio {
+public class Neuron {
 
     private List<Double> weights;
 
@@ -9,13 +9,13 @@ public class Neuronio {
 
     private Double output;
 
-    public Neuronio(int numPesosCamadaAnterior, TipoNeuronio tipo) {
+    public Neuron(int numWeightsLastLayer, NeuronType type) {
         this.weights = new ArrayList<>();
         this.output = 0.;
-        for (int i = 0; i < numPesosCamadaAnterior; i++) {
+        for (int i = 0; i < numWeightsLastLayer; i++) {
             this.weights.add(Math.random());
         }
-        if (tipo == TipoNeuronio.COM_BIAS) {
+        if (type == NeuronType.WITH_BIAS) {
             this.bias = Math.random();
         } else {
             this.bias = 0.;
