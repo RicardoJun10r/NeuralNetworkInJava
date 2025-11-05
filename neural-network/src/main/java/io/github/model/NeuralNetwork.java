@@ -23,10 +23,10 @@ public class NeuralNetwork {
         this.inputTraining = inputs;
         this.outputTraining = outputs;
         int inputLayerSize = inputTraining[0].length;
-        int outputSize = outputTraining[0].length;
+        int outputLayerSize = outputTraining[0].length;
         this.inputLayer = new InputLayer(inputLayerSize);
         this.hiddenLayer = new HiddenLayer(hiddenLayerSize, inputLayerSize);
-        this.outputLayer = new OutputLayer(outputSize, hiddenLayerSize);
+        this.outputLayer = new OutputLayer(outputLayerSize, hiddenLayerSize);
         this.learningRate = learningRate;
         this.showError = showError;
     }
