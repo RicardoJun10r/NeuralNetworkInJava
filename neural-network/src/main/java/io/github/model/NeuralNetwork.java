@@ -16,17 +16,17 @@ public class NeuralNetwork {
 
     private Double[][] inputTraining;
 
-    private Double[] outputTraining;
+    private Double[][] outputTraining;
 
-    public NeuralNetwork(Double[][] inputs, Double[] outputs, int hiddenLayerSize, double learningRate,
+    public NeuralNetwork(Double[][] inputs, Double[][] outputs, int hiddenLayerSize, double learningRate,
             boolean showError) {
         this.inputTraining = inputs;
         this.outputTraining = outputs;
         int inputLayerSize = inputTraining[0].length;
-        int numSaida = outputTraining.length;
+        int outputSize = outputTraining[0].length;
         this.inputLayer = new InputLayer(inputLayerSize);
         this.hiddenLayer = new HiddenLayer(hiddenLayerSize, inputLayerSize);
-        this.outputLayer = new OutputLayer(numSaida, hiddenLayerSize);
+        this.outputLayer = new OutputLayer(outputSize, hiddenLayerSize);
         this.learningRate = learningRate;
         this.showError = showError;
     }
@@ -35,7 +35,7 @@ public class NeuralNetwork {
         for (int epoch = 0; epoch < epochs; epoch++) {
             System.out.println("Epoch: " + (epoch + 1));
             for (int i = 0; i < this.inputTraining.length; i++) {
-                feedFoward((this.inputTraining[i]), this.outputTraining);
+                feedFoward((this.inputTraining[i]), this.outputTraining[i]);
             }
         }
     }
