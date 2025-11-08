@@ -1,5 +1,6 @@
 package io.github.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NeuralNetwork {
@@ -18,6 +19,10 @@ public class NeuralNetwork {
 
     private Double[][] outputTraining;
 
+    private List<Double> errorHistory;
+
+    private Double totalError;
+
     public NeuralNetwork(Double[][] inputs, Double[][] outputs, int hiddenLayerSize, double learningRate,
             boolean showError) {
         this.inputTraining = inputs;
@@ -29,14 +34,19 @@ public class NeuralNetwork {
         this.outputLayer = new OutputLayer(outputLayerSize, hiddenLayerSize);
         this.learningRate = learningRate;
         this.showError = showError;
+        this.errorHistory = new ArrayList<>();
+        this.totalError = 0.0;
     }
 
     public void train(int epochs) {
         for (int epoch = 0; epoch < epochs; epoch++) {
             System.out.println("Epoch: " + (epoch + 1));
+            this.totalError = 0.0;
             for (int i = 0; i < this.inputTraining.length; i++) {
                 feedFoward((this.inputTraining[i]), this.outputTraining[i]);
             }
+            Double averageError = totalError / this.inputTraining.length;
+            errorHistory.add(averageError);
         }
     }
 
@@ -96,14 +106,17 @@ public class NeuralNetwork {
     }
 
     private void output(List<Neuron> outputLayerNeurons, Double[] outputs) {
+        Double totalErrorTmp = 0.0;
         for (int i = 0; i < outputLayerNeurons.size(); i++) {
             Neuron outputNeuron = outputLayerNeurons.get(i);
             double erro = Math.pow((outputs[i] - outputNeuron.getOutput()), 2);
+            totalErrorTmp += erro;
             if (showError) {
                 System.out.println("Expected Output: " + outputs[i] + " - Predicted Output: " + outputNeuron.getOutput()
                         + " - Error: " + erro);
             }
         }
+        this.totalError += totalErrorTmp;
     }
 
     private void backpropagation(List<Neuron> inputLayerNeurons, List<Neuron> hiddenLayerNeurons,
@@ -164,6 +177,10 @@ public class NeuralNetwork {
 
     private static double sigmoidDerivative(double x) {
         return x * (1 - x);
+    }
+
+    public ArrayList<Double> getErrorHistory() {
+        return (ArrayList<Double>) errorHistory;
     }
 
 }
